@@ -4,6 +4,12 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour {
 
 	public KeyCode moveUp, moveDown, moveLeft, moveRight;
+    
+    public int playerNum;
+    
+    public PlayerType playerType;
+    public ManualControlType manualControlType;
+    public AutomatedControlType automatedControlType;
 
 	public float speedX=0, speedY=0;
 	
