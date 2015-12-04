@@ -11,9 +11,11 @@ Sprint 1
 ----
 
 2015-12-03 pm
-
+---DONE
    * Establish second player class
    * Establish default second player controls
+   
+---PUSH
    * Establish lives for second player
    * Establish basic "game start" and "game over" screens
 
