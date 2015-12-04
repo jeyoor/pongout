@@ -6,7 +6,7 @@ public class BallControl : MonoBehaviour {
 	public static GameSetup gameSetup;
 	public float minSpeed = 5, maxSpeed = 25;
 
-	public GameObject[] reserve;
+	public GameObject[] playerOneLives;
 
 	private TextMesh gameMessage;
 	private TextMesh scoreMessage;
@@ -14,7 +14,7 @@ public class BallControl : MonoBehaviour {
 	private int score = 0;
 	Vector3 initialPos = new Vector3(0f, 0f, 0f);
 
-	int spareCount;
+	int playerOneLifeCount;
 
 	// Use this for initialization
 	void Start () {
@@ -29,7 +29,7 @@ public class BallControl : MonoBehaviour {
 		// set the speed
 		Reset();
 		// find out how many spare balls we have
-		spareCount = reserve.Length;
+		playerOneLifeCount = playerOneLives.Length;
 	}
 	
 	// Resets the ball with the initial position and speed.
@@ -42,11 +42,6 @@ public class BallControl : MonoBehaviour {
 			GetComponent<Rigidbody2D>().AddForce (new Vector2 (Random.Range (-50f, -30f), 10));
 		}
 	}
-	
-	// Update is called once per frame
-	//void Update () {
-	
-	//}
 
 	void AverageSpeed(Collision2D colInfo) {
 		//average the velocity over x between the player and the ball if the player is moving
@@ -72,9 +67,9 @@ public class BallControl : MonoBehaviour {
 
 	// lose a ball if we hit the ground
 	void LoseBall() {
-		if (spareCount > 0) {
-			spareCount--;
-			reserve [spareCount].SetActive (false);
+		if (playerOneLifeCount > 0) {
+			playerOneLifeCount--;
+			playerOneLives [playerOneLifeCount].SetActive (false);
 			Reset();
 		} else {
 			GameLost();
@@ -102,7 +97,7 @@ public class BallControl : MonoBehaviour {
 
 	//The game has been won because the last brick was destroyed
 	private void GameWon() {
-		for (int i = 0; i < spareCount; i++) {
+		for (int i = 0; i < playerOneLifeCount; i++) {
 			score += 5;
 			UpdateScoreMessage(score);
 			gameObject.SetActive(false);

@@ -94,11 +94,13 @@ public class GameSetup : MonoBehaviour {
 			players [0].position = new Vector3 (players [0].position.x, 
 			                                   mainCam.ScreenToWorldPoint (new Vector3 (0f, 20f, 0f)).y, 
 			                                   0f);
-		} else if (players.Length > 1) { // two players, they must be vertical
-			players [0].position = new Vector3 (mainCam.ScreenToWorldPoint (new Vector3 (20f, 0f, 0f)).x, 
-			   	                 players [0].position.y, 0f);
-			players [1].position = new Vector3 (mainCam.ScreenToWorldPoint (new Vector3 (Screen.width - 20f, 0f, 0f)).x,
-		              	         players [1].position.y, 0f);
+		} else if (players.Length > 1) {
+			players [0].position = new Vector3 (players [0].position.x, 
+			                                   mainCam.ScreenToWorldPoint (new Vector3 (0f, 20f, 0f)).y, 
+			                                   0f);
+			players [1].position = new Vector3 (players [1].position.x, 
+			                                   mainCam.ScreenToWorldPoint (new Vector3 (0f,  Screen.height - 20f, 0f)).y, 
+			                                   0f);
 		} 
 	}
 
