@@ -13,9 +13,3 @@ Credits
    * [Dr. Dana Vrajitoru](http://www.cs.iusb.edu/~danav) for Breakout Unity3D source code and motivation
    * [OpenGameArt.org](http://opengameart.org) for images and sounds
    * [FreeSound.org](http://freesound.org) for additional sounds
-
-Licensing
-----
-
-PongOut is Open Source software.
-See the LICENSE for licensing details (MIT).
