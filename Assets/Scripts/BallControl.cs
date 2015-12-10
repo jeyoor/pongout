@@ -7,6 +7,7 @@ public class BallControl : MonoBehaviour {
 	public float minSpeed = 5, maxSpeed = 25;
 
 	public GameObject[] playerOneLives;
+    public GameObject[] playerTwoLives;
 
 	private TextMesh gameMessage;
 	private TextMesh scoreMessage;
@@ -15,6 +16,7 @@ public class BallControl : MonoBehaviour {
 	Vector3 initialPos = new Vector3(0f, 0f, 0f);
 
 	int playerOneLifeCount;
+    int playerTwoLifeCount;
 
 	// Use this for initialization
 	void Start () {
@@ -30,6 +32,7 @@ public class BallControl : MonoBehaviour {
 		Reset();
 		// find out how many spare balls we have
 		playerOneLifeCount = playerOneLives.Length;
+        playerTwoLifeCount = playerTwoLives.Length;
 	}
 	
 	// Resets the ball with the initial position and speed.
@@ -65,14 +68,26 @@ public class BallControl : MonoBehaviour {
 		GetComponent<Rigidbody2D>().velocity = new Vector2(velX, velY);
 	}
 
-	// lose a ball if we hit the ground
-	void LoseBall() {
+	// PlayerOne loses a ball if we hit the ground
+	void PlayerOneLoseBall() {
 		if (playerOneLifeCount > 0) {
 			playerOneLifeCount--;
 			playerOneLives [playerOneLifeCount].SetActive (false);
 			Reset();
 		} else {
-			GameLost();
+			GameOver("Two");
+			gameObject.SetActive(false);
+		}
+	}
+    
+    // PlayerTwo loses a ball if we hit the ceiling
+	void PlayerTwoLoseBall() {
+		if (playerTwoLifeCount > 0) {
+			playerTwoLifeCount--;
+			playerTwoLives [playerTwoLifeCount].SetActive (false);
+			Reset();
+		} else {
+			GameOver("One");
 			gameObject.SetActive(false);
 		}
 	}
@@ -95,6 +110,7 @@ public class BallControl : MonoBehaviour {
 		}
 	}
 
+    //TODO: replace with level rebuild logic here???
 	//The game has been won because the last brick was destroyed
 	private void GameWon() {
 		for (int i = 0; i < playerOneLifeCount; i++) {
@@ -107,8 +123,8 @@ public class BallControl : MonoBehaviour {
 	}
 
 	//The game has been lost because the last ball was lost
-	private void GameLost() {
-		gameMessage.text = "You lost... :(";
+	private void GameOver(string playerWon) {
+		gameMessage.text = "Player " + playerWon + " Won!";
 		resetButton.SetActive(true);
 	}
 
@@ -126,7 +142,10 @@ public class BallControl : MonoBehaviour {
 			AverageSpeed (colInfo);
 		}
 		else if (colInfo.collider.tag == "Ground") {
-			LoseBall ();
+			PlayerOneLoseBall ();
+		}
+        else if (colInfo.collider.tag == "Ceiling") {
+			PlayerTwoLoseBall ();
 		}
 		else if (colInfo.collider.tag == "Brick") {
 			BrickCollision(colInfo);

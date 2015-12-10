@@ -33,6 +33,7 @@ Sprint 3
 
 2015-12-11 pm
 
+    * figure out "end of level" logic (rebuild new level?)
     * get better graphics, fonts, colors
     * get icons and art
 
