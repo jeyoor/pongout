@@ -14,17 +14,15 @@ Sprint 1
 ---DONE
    * Establish second player class
    * Establish default second player controls
-   
----PUSH
-   * Establish lives for second player
-   * Establish basic "game start" and "game over" screens
 
 Sprint 2
 ----
 ----
 
-2015-12-06 am
+2015-12-10 am
 
+   * Establish lives for second player
+   * Establish basic "game start" and "game over" screens
    * Implement score for second player
    * Implement score sharing (include opponent type)
    * Implement a basic opponent
@@ -33,7 +31,7 @@ Sprint 3
 ----
 ----
 
-2015-12-08 pm
+2015-12-11 pm
 
     * get better graphics, fonts, colors
     * get icons and art
@@ -42,7 +40,7 @@ Sprint 4
 ----
 ----
 
-2015-12-11 pm
+2015-12-12 pm
 
    * Wrap up functionality
    * Write up user-guide documentation
