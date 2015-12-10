@@ -23,9 +23,10 @@ Sprint 2
 
    * Establish lives for second player
    * Establish basic "game start" and "game over" screens
+--DONE
    * Implement score for second player
    * Implement score sharing (include opponent type)
-   * Implement a basic opponent
+   * Implement a basic computer opponent
 
 Sprint 3
 ----

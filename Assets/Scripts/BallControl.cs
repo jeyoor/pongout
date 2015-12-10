@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class BallControl : MonoBehaviour {
@@ -6,37 +7,41 @@ public class BallControl : MonoBehaviour {
 	public static GameSetup gameSetup;
 	public float minSpeed = 5, maxSpeed = 25;
 
+    public Text playerOneScoreText;
+    public Text playerTwoScoreText;
+    
+    public GameObject gameOverPanel;
+    
 	public GameObject[] playerOneLives;
     public GameObject[] playerTwoLives;
 
 	private TextMesh gameMessage;
-	private TextMesh scoreMessage;
+
 	private GameObject resetButton;
-	private int score = 0;
 	Vector3 initialPos = new Vector3(0f, 0f, 0f);
 
 	int playerOneLifeCount;
     int playerTwoLifeCount;
+    
+    int playerOneScore = 0;
+    int playerTwoScore = 0;
+    
+    int lastPlayerTouched = -1;
 
 	// Use this for initialization
 	void Start () {
-		gameMessage = GameObject.Find("gameMessage").GetComponentInChildren<TextMesh>();
-		gameMessage.text = "";
-		scoreMessage = GameObject.Find("scoreMessage").GetComponentInChildren<TextMesh>();
-		UpdateScoreMessage(0);
-		resetButton = GameObject.Find("resetButton");
-		resetButton.SetActive(false);
+		UpdateScoreTexts();
 		// save the initial position
 		initialPos = transform.position;
 		// set the speed
-		Reset();
+		ResetBallPosition();
 		// find out how many spare balls we have
 		playerOneLifeCount = playerOneLives.Length;
         playerTwoLifeCount = playerTwoLives.Length;
 	}
 	
 	// Resets the ball with the initial position and speed.
-	void Reset() {
+	void ResetBallPosition() {
 		transform.position = initialPos; //recover the initial position
 		int randomNumber = Random.Range (0, 2);
 		if (randomNumber == 0) { // go left or right
@@ -73,7 +78,7 @@ public class BallControl : MonoBehaviour {
 		if (playerOneLifeCount > 0) {
 			playerOneLifeCount--;
 			playerOneLives [playerOneLifeCount].SetActive (false);
-			Reset();
+			ResetBallPosition();
 		} else {
 			GameOver("Two");
 			gameObject.SetActive(false);
@@ -85,7 +90,7 @@ public class BallControl : MonoBehaviour {
 		if (playerTwoLifeCount > 0) {
 			playerTwoLifeCount--;
 			playerTwoLives [playerTwoLifeCount].SetActive (false);
-			Reset();
+			ResetBallPosition();
 		} else {
 			GameOver("One");
 			gameObject.SetActive(false);
@@ -103,8 +108,13 @@ public class BallControl : MonoBehaviour {
 			    pointsGained = 2;
 			}
 		}
-		score += pointsGained;
-		UpdateScoreMessage(score);
+        if (lastPlayerTouched == 1) {
+            playerOneScore += pointsGained;
+        }
+        else if (lastPlayerTouched == 2) {
+            playerTwoScore += pointsGained;
+        }
+		UpdateScoreTexts();
         if (gameSetup.IsGameWon()) {
 			GameWon();
 		}
@@ -114,30 +124,39 @@ public class BallControl : MonoBehaviour {
 	//The game has been won because the last brick was destroyed
 	private void GameWon() {
 		for (int i = 0; i < playerOneLifeCount; i++) {
-			score += 5;
-			UpdateScoreMessage(score);
-			gameObject.SetActive(false);
+			playerOneScore += 5;
+			UpdateScoreTexts();
 		}
-		resetButton.SetActive(true);
-		gameMessage.text = "You won... :D";
+        for (int i = 0; i < playerTwoLifeCount; i++) {
+			playerTwoScore += 5;
+			UpdateScoreTexts();
+		}
+        gameObject.SetActive(false);
+		gameOverPanel.SetActive(true);
 	}
 
 	//The game has been lost because the last ball was lost
 	private void GameOver(string playerWon) {
-		gameMessage.text = "Player " + playerWon + " Won!";
-		resetButton.SetActive(true);
+		gameOverPanel.SetActive(true);
 	}
 
 	//Update the score message with a new value
-	private void UpdateScoreMessage(int newScore) {
-		if (scoreMessage != null) {
-			scoreMessage.text = "Score: " + newScore;
+	private void UpdateScoreTexts() {
+		if (playerOneScoreText != null) {
+			playerOneScoreText.text = "Player 1: " + playerOneScore;
+		}
+        if (playerTwoScoreText != null) {
+			playerTwoScoreText.text = "Player 2: " + playerTwoScore;
 		}
 	}
 
 	// collision detection function
 	void OnCollisionEnter2D(Collision2D colInfo) {
 		if (colInfo.collider.tag == "Player") {
+            
+            PlayerControl playerInfo = colInfo.collider.GetComponent<PlayerControl>();
+            lastPlayerTouched = playerInfo.playerNum;
+            
 			//average the velocity over x between the player and the ball
 			AverageSpeed (colInfo);
 		}
