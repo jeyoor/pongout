@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameSetup : MonoBehaviour {
 
-	private const float yOffset = 0F;
+	private float brickYOffset = -4f;
 
 	public Camera mainCam;
 
@@ -23,7 +23,7 @@ public class GameSetup : MonoBehaviour {
 
 	public int redRowsStart = 1;
     public int redRowsEnd = 1;
-	public int blueRows = 2;
+	public int blueRows = 3;
 	public int columns = 8;
 
 	public Transform[] players;
@@ -48,9 +48,9 @@ public class GameSetup : MonoBehaviour {
 		brickArray = new GameObject[columns, redRowsStart + blueRows + redRowsEnd];
 		for (int i = 0; i < columns; i++) {
 			for (int j = 0; j < redRowsStart + blueRows + redRowsEnd; j++) {
-				brickArray [i, j] = Instantiate ((j < blueRows || j > blueRows) ? blueBrickRef : redBrickRef) as GameObject;
-				brickArray [i, j].transform.position = new Vector3 (i - columns / 2, (j - redRowsStart + blueRows + redRowsEnd / 2) + yOffset, 0f);
-				brickArray [i, j].GetComponent<Brick>().SetId(i, j, (j < blueRows || j > blueRows) ? Brick.BrickType.BLUE : Brick.BrickType.RED);
+				brickArray [i, j] = Instantiate ((j < blueRows && j > blueRows) ? redBrickRef : blueBrickRef) as GameObject;
+				brickArray [i, j].transform.position = new Vector3 (i - columns / 2, (j - redRowsStart + blueRows + redRowsEnd / 2) + brickYOffset, 0f);
+				brickArray [i, j].GetComponent<Brick>().SetId(i, j, (j < blueRows && j > blueRows) ? Brick.BrickType.RED : Brick.BrickType.BLUE);
 			}
 		}
 

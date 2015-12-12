@@ -18,7 +18,8 @@ public class BallControl : MonoBehaviour {
 	private TextMesh gameMessage;
 
 	private GameObject resetButton;
-	Vector3 initialPos;
+	Vector3 initialPosPlayer1;
+    Vector3 initialPosPlayer2;
 
 	int playerOneLifeCount;
     int playerTwoLifeCount;
@@ -31,7 +32,8 @@ public class BallControl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         // save the initial position
-		initialPos = transform.position;
+		initialPosPlayer1 = transform.position;
+        initialPosPlayer2 = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
 		UpdateScoreTexts();
 		// set the speed
 		ResetBallPosition();
@@ -42,14 +44,25 @@ public class BallControl : MonoBehaviour {
 	
 	// Resets the ball with the initial position and speed.
 	void ResetBallPosition() {
-		transform.position = initialPos; //recover the initial position
+		
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-		int randomNumber = Random.Range (0, 2);
-		if (randomNumber == 0) { // go left or right
-			GetComponent<Rigidbody2D>().AddForce (new Vector2 (Random.Range (30f, 50f), -5));
-		} else {
-			GetComponent<Rigidbody2D>().AddForce (new Vector2 (Random.Range (-50f, -30f), -5));
-		}
+        int playerOneOrPlayerTwo = Random.Range (0, 2);
+        float upOrDown = 0;
+        if (playerOneOrPlayerTwo == 0) {
+            transform.position = initialPosPlayer1;
+            upOrDown = -5;
+        }
+        else {
+            transform.position = initialPosPlayer2;
+            upOrDown = 5;
+        }
+        int leftOrRight = Random.Range (0, 2);
+        if (leftOrRight == 0) { // go left or right
+            GetComponent<Rigidbody2D>().AddForce (new Vector2 (Random.Range (15f, 25f), upOrDown));
+        }
+        else {
+            GetComponent<Rigidbody2D>().AddForce (new Vector2 (Random.Range (-25f, -15f), upOrDown));
+        }
 	}
 
     void AverageSpeed(Collision2D colInfo) {
