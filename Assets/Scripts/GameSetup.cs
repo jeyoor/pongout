@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameSetup : MonoBehaviour {
@@ -11,7 +12,22 @@ public class GameSetup : MonoBehaviour {
 	public GameObject bottomWall;
 	public GameObject leftWall;
 	public GameObject rightWall;
-	
+
+    public GameObject gameStartPanel;
+    public GameObject headsUpDisplayPanel;
+
+    public Toggle playerOneManual;
+    public Toggle playerOneLinearFollow;
+    public Toggle playerOnePhysicsForecast;
+    public Toggle playerTwoManual;
+    public Toggle playerTwoLinearFollow;
+    public Toggle playerTwoPhysicsForecast;
+
+    public PlayerControl playerOne;
+    public PlayerControl playerTwo;
+    
+    public BallControl gameBall;
+
 	BoxCollider2D topWallCol;
 	BoxCollider2D bottomWallCol;
 	BoxCollider2D leftWallCol;
@@ -32,6 +48,7 @@ public class GameSetup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        BallControl.gameSetup = this;
 		if (topWall.GetComponent<SpriteRenderer> ()) { // do we have a sprite?
 			// get its width and store it 
 			spriteSize = topWall.GetComponent<SpriteRenderer> ().sprite.bounds.size.x;
@@ -44,7 +61,11 @@ public class GameSetup : MonoBehaviour {
 			rightWallCol = rightWall.GetComponent<BoxCollider2D> ();
 		}
 
-		//initialize the bricks
+        InstantiateBricks();
+		
+	}
+    
+    public void InstantiateBricks() {
 		brickArray = new GameObject[columns, redRowsStart + blueRows + redRowsEnd];
 		for (int i = 0; i < columns; i++) {
 			for (int j = 0; j < redRowsStart + blueRows + redRowsEnd; j++) {
@@ -53,9 +74,39 @@ public class GameSetup : MonoBehaviour {
 				brickArray [i, j].GetComponent<Brick>().SetId(i, j, (j < blueRows && j > blueRows) ? Brick.BrickType.RED : Brick.BrickType.BLUE);
 			}
 		}
+    }
+    
+    public void PlayGame() {
+        if (playerOneManual.isOn) {
+            playerOne.playerType = PlayerType.Manual;
+            playerOne.manualControlType = ManualControlType.ArrowKeys;
+        }
+        else if (playerOneLinearFollow.isOn) {
+            playerOne.playerType = PlayerType.Automated;
+            playerOne.automatedControlType = AutomatedControlType.LinearFollow;
+        }
+        else if (playerOnePhysicsForecast.isOn) {
+            playerOne.playerType = PlayerType.Automated;
+            playerOne.automatedControlType = AutomatedControlType.PhysicsForecast;
+        }
 
-		BallControl.gameSetup = this;
-	}
+        if (playerTwoManual.isOn) {
+            playerTwo.playerType = PlayerType.Manual;
+            playerTwo.manualControlType = ManualControlType.ArrowKeys;
+        }
+        else if (playerTwoLinearFollow.isOn) {
+            playerTwo.playerType = PlayerType.Automated;
+            playerTwo.automatedControlType = AutomatedControlType.LinearFollow;
+        }
+        else if (playerTwoPhysicsForecast.isOn) {
+            playerTwo.playerType = PlayerType.Automated;
+            playerTwo.automatedControlType = AutomatedControlType.PhysicsForecast;
+        }
+        
+        gameStartPanel.SetActive(false);
+        headsUpDisplayPanel.SetActive(true);
+        gameBall.InitialSetup();
+    }
 	
 	// Update is called once per frame
 	void Update () {

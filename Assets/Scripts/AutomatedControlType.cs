@@ -1,3 +1,3 @@
 public enum AutomatedControlType {
-    LinearFollow, PhysicsFollow
+    LinearFollow, PhysicsForecast
 }

@@ -36,6 +36,7 @@ Sprint 3
    * Implement score sharing (include opponent type)
    * get better graphics, fonts, colors
    * figure out "end of level" logic (rebuild new level? or just do nothing?)
+   * Hi score submission graphing
 
 Sprint 4
 ----
@@ -43,8 +44,8 @@ Sprint 4
 
 2015-12-14 pm
 
-   * Sound effects
    * Wrap up functionality
+   * Sound effects
    * Write up user-guide documentation
    * Submit a first draft
    

@@ -37,12 +37,14 @@ public class BallControl : MonoBehaviour {
 		initialPosPlayer1 = transform.position;
         initialPosPlayer2 = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
 		UpdateScoreTexts();
-		// set the speed
-		ResetBallPosition();
 		// find out how many spare balls we have
 		playerOneLifeCount = playerOneLives.Length;
         playerTwoLifeCount = playerTwoLives.Length;
 	}
+    
+    public void InitialSetup() {
+		ResetBallPosition();
+    }
 	
 	// Resets the ball with the initial position and speed.
 	void ResetBallPosition() {
