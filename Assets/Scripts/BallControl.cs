@@ -30,6 +30,9 @@ public class BallControl : MonoBehaviour {
     int playerTwoScore = 0;
     
     int lastPlayerTouched = -1;
+    
+    //every time the ball hits a paddle, its velocity will be scaled up this much
+    float bounceSpeedScale = 1.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -73,7 +76,7 @@ public class BallControl : MonoBehaviour {
         //average the velocity over x between the player and the ball if the player is moving
         float velX = GetComponent<Rigidbody2D>().velocity.x;
         if (colInfo.collider.GetComponent<Rigidbody2D>().velocity.x != 0) {
-            velX = velX / 2 + colInfo.collider.GetComponent<Rigidbody2D>().velocity.x / 3;
+            velX = (velX / 2 + colInfo.collider.GetComponent<Rigidbody2D>().velocity.x / 3) * bounceSpeedScale;
         }
         if (velX >= 0)
             velX = Mathf.Clamp (velX, minSpeed, maxSpeed);
@@ -83,7 +86,7 @@ public class BallControl : MonoBehaviour {
         // then the same over y
         float velY = GetComponent<Rigidbody2D>().velocity.y;
         if (colInfo.collider.GetComponent<Rigidbody2D>().velocity.y != 0) {
-            velY = velY / 2 + colInfo.collider.GetComponent<Rigidbody2D>().velocity.y / 3;
+            velY = (velY / 2 + colInfo.collider.GetComponent<Rigidbody2D>().velocity.y / 3) * bounceSpeedScale;
         }
         if (velY >= 0)
             velY = Mathf.Clamp (velY, minSpeed, maxSpeed);
@@ -134,16 +137,16 @@ public class BallControl : MonoBehaviour {
             playerTwoScore += pointsGained;
         }
 		UpdateScoreTexts();
-        if (gameSetup.IsGameWon()) {
-			GameWon();
+        if (gameSetup.IsLevelOver()) {
+			LevelOver();
 		}
 	}
 
     //TODO: replace with level rebuild logic here???
 	//The game has been won because the last brick was destroyed
-	private void GameWon() {
-        gameObject.SetActive(false);
-		gameOverPanel.SetActive(true);
+	private void LevelOver() {
+        bounceSpeedScale += 0.1f;
+        gameSetup.InstantiateBricks();
 	}
 
 	//The game has been lost because the last ball was lost

@@ -18,9 +18,11 @@ public class GameSetup : MonoBehaviour {
 
     public Toggle playerOneManual;
     public Toggle playerOneLinearFollow;
+    public Toggle playerOneFastLinearFollow;
     public Toggle playerOnePhysicsForecast;
     public Toggle playerTwoManual;
     public Toggle playerTwoLinearFollow;
+    public Toggle playerTwoFastLinearFollow;
     public Toggle playerTwoPhysicsForecast;
 
     public PlayerControl playerOne;
@@ -62,46 +64,55 @@ public class GameSetup : MonoBehaviour {
 		}
 
         InstantiateBricks();
-		
 	}
-    
+
     public void InstantiateBricks() {
 		brickArray = new GameObject[columns, redRowsStart + blueRows + redRowsEnd];
 		for (int i = 0; i < columns; i++) {
 			for (int j = 0; j < redRowsStart + blueRows + redRowsEnd; j++) {
 				brickArray [i, j] = Instantiate ((j < blueRows && j > blueRows) ? redBrickRef : blueBrickRef) as GameObject;
 				brickArray [i, j].transform.position = new Vector3 (i - columns / 2, (j - redRowsStart + blueRows + redRowsEnd / 2) + brickYOffset, 0f);
-				brickArray [i, j].GetComponent<Brick>().SetId(i, j, (j < blueRows && j > blueRows) ? Brick.BrickType.RED : Brick.BrickType.BLUE);
+				brickArray [i, j].GetComponent<Brick>().SetInfo((j < blueRows && j > blueRows) ? Brick.BrickType.RED : Brick.BrickType.BLUE);
 			}
 		}
     }
     
     public void PlayGame() {
-        if (playerOneManual.isOn) {
+        if (playerOneManual != null && playerOneManual.isOn) {
             playerOne.playerType = PlayerType.Manual;
             playerOne.manualControlType = ManualControlType.ArrowKeys;
         }
-        else if (playerOneLinearFollow.isOn) {
+        else if (playerOneLinearFollow != null && playerOneLinearFollow.isOn) {
             playerOne.playerType = PlayerType.Automated;
             playerOne.automatedControlType = AutomatedControlType.LinearFollow;
         }
-        else if (playerOnePhysicsForecast.isOn) {
+        else if (playerOneFastLinearFollow != null && playerOneFastLinearFollow.isOn) {
+            playerOne.playerType = PlayerType.Automated;
+            playerOne.automatedControlType = AutomatedControlType.FastLinearFollow;
+        }
+        else if (playerOnePhysicsForecast != null && playerOnePhysicsForecast.isOn) {
             playerOne.playerType = PlayerType.Automated;
             playerOne.automatedControlType = AutomatedControlType.PhysicsForecast;
         }
+        playerOne.Initialize();
 
-        if (playerTwoManual.isOn) {
+        if (playerTwoManual != null && playerTwoManual.isOn) {
             playerTwo.playerType = PlayerType.Manual;
             playerTwo.manualControlType = ManualControlType.ArrowKeys;
         }
-        else if (playerTwoLinearFollow.isOn) {
+        else if (playerTwoLinearFollow != null && playerTwoLinearFollow.isOn) {
             playerTwo.playerType = PlayerType.Automated;
             playerTwo.automatedControlType = AutomatedControlType.LinearFollow;
         }
-        else if (playerTwoPhysicsForecast.isOn) {
+        else if (playerTwoFastLinearFollow != null && playerTwoFastLinearFollow.isOn) {
+            playerTwo.playerType = PlayerType.Automated;
+            playerTwo.automatedControlType = AutomatedControlType.FastLinearFollow;
+        }
+        else if (playerTwoPhysicsForecast != null && playerTwoPhysicsForecast.isOn) {
             playerTwo.playerType = PlayerType.Automated;
             playerTwo.automatedControlType = AutomatedControlType.PhysicsForecast;
         }
+        playerTwo.Initialize();
         
         gameStartPanel.SetActive(false);
         headsUpDisplayPanel.SetActive(true);
@@ -158,7 +169,7 @@ public class GameSetup : MonoBehaviour {
 		} 
 	}
 
-	public bool IsGameWon() {
+	public bool IsLevelOver() {
 		bool result = true;
 		for (int i = 0; i < columns; i++) {
 			for (int j = 0; j < redRowsStart + blueRows + redRowsEnd; j++) {

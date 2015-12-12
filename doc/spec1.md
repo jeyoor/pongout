@@ -80,11 +80,5 @@ Once either player's lives are exhausted, the game is over.
 
 The *Game Over* screen gives the players the option to upload their high score to a web-based high score database.
 
-The window will present this message: "Thank you for playing! Would you like to upload your score?" with a "Yes" or "No" button.
-If the player chooses not to upload their score, the *New Game* dialog will display.
-
-If the player chooses to upload their score, a *Progress Bar* dialog will display as their data uploads.
-
-The player will have the option to cancel their upload.
-Once the upload is complete, a *Thank You* dialog will display.
-
+The window will present this message: "Thank you for playing!" with an "Upload Score" button.
+Each player will have a place to enter their name.

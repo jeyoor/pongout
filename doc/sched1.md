@@ -32,28 +32,31 @@ Sprint 3
    * Implement score for second player
    * Refactor start game UI two Player 1 col and Player 2 col
    * Implement a basic linear computer opponent
-   * Implement a physics-based opponent
+   * figure out "end of level" logic (rebuild new level & increase speed)
    * Implement score sharing (include opponent type)
-   * get better graphics, fonts, colors
-   * figure out "end of level" logic (rebuild new level? or just do nothing?)
    * Hi score submission graphing
+   * Submit a first draft
+
 
 Sprint 4
 ----
 ----
 
-2015-12-14 pm
+2015-12-15 pm
 
    * Wrap up functionality
    * Sound effects
+   * get better graphics, fonts, colors
    * Write up user-guide documentation
-   * Submit a first draft
-   
-Sprint 5 (if possible)
+   * Submit second draft
+
+
+Future work
 ----
 ----
 
-2015-12-15 pm
-
+   * Automated test suite + TravisCI
    * Implement advanced opponent(s)
-   * Explore machine learning possibilities (NEAT? SharpNEAT?)
+      * Implement a physics-based opponent (see if it can win even at lower speeds)
+      * Implement a neuroevolution-based opponent
+      * Bayesian?
