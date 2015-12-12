@@ -8,7 +8,9 @@ public class BallControl : MonoBehaviour {
 	public float minSpeed = 5, maxSpeed = 25;
 
     public Text playerOneScoreText;
+    public Text playerOneEndGameScoreText;
     public Text playerTwoScoreText;
+    public Text playerTwoEndGameScoreText;
     
     public GameObject gameOverPanel;
     
@@ -158,10 +160,10 @@ public class BallControl : MonoBehaviour {
 	//Update the score message with a new value
 	private void UpdateScoreTexts() {
 		if (playerOneScoreText != null) {
-			playerOneScoreText.text = "Player 1: " + playerOneScore;
+			playerOneScoreText.text = playerOneEndGameScoreText.text = "Player 1: " + playerOneScore;
 		}
         if (playerTwoScoreText != null) {
-			playerTwoScoreText.text = "Player 2: " + playerTwoScore;
+			playerTwoScoreText.text = playerTwoEndGameScoreText.text = "Player 2: " + playerTwoScore;
 		}
 	}
 
