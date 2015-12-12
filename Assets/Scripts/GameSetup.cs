@@ -118,4 +118,9 @@ public class GameSetup : MonoBehaviour {
 		}
 		return result;
 	}
+    
+    //called from Play Again? button
+    public void ReloadGame() {
+        Application.LoadLevel(Application.loadedLevel);
+    }
 }

@@ -51,27 +51,28 @@ public class BallControl : MonoBehaviour {
 		}
 	}
 
-	void AverageSpeed(Collision2D colInfo) {
-		//average the velocity over x between the player and the ball if the player is moving
-		float velX = GetComponent<Rigidbody2D>().velocity.x;
-		if (colInfo.collider.GetComponent<Rigidbody2D>().velocity.x != 0) {
-			velX = velX / 2 + colInfo.collider.GetComponent<Rigidbody2D>().velocity.x / 3;
-			if (velX >= 0)
-				velX = Mathf.Clamp (velX, minSpeed, maxSpeed);
-			else
-				velX = Mathf.Clamp (velX, -maxSpeed, -minSpeed);
-		}
-		// then the same over y
-		float velY = GetComponent<Rigidbody2D>().velocity.y;
-		if (colInfo.collider.GetComponent<Rigidbody2D>().velocity.y != 0) {
-			velY = velY / 2 + colInfo.collider.GetComponent<Rigidbody2D>().velocity.y / 3;
-			if (velY >= 0)
-				velY = Mathf.Clamp (velY, minSpeed, maxSpeed);
-			else
-				velY = Mathf.Clamp (velY, -maxSpeed, -minSpeed);
-		}
-		GetComponent<Rigidbody2D>().velocity = new Vector2(velX, velY);
-	}
+    void AverageSpeed(Collision2D colInfo) {
+        //average the velocity over x between the player and the ball if the player is moving
+        float velX = GetComponent<Rigidbody2D>().velocity.x;
+        if (colInfo.collider.GetComponent<Rigidbody2D>().velocity.x != 0) {
+            velX = velX / 2 + colInfo.collider.GetComponent<Rigidbody2D>().velocity.x / 3;
+        }
+        if (velX >= 0)
+            velX = Mathf.Clamp (velX, minSpeed, maxSpeed);
+        else
+            velX = Mathf.Clamp (velX, -maxSpeed, -minSpeed);
+
+        // then the same over y
+        float velY = GetComponent<Rigidbody2D>().velocity.y;
+        if (colInfo.collider.GetComponent<Rigidbody2D>().velocity.y != 0) {
+            velY = velY / 2 + colInfo.collider.GetComponent<Rigidbody2D>().velocity.y / 3;
+        }
+        if (velY >= 0)
+            velY = Mathf.Clamp (velY, minSpeed, maxSpeed);
+        else
+            velY = Mathf.Clamp (velY, -maxSpeed, -minSpeed);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(velX, velY);
+    }
 
 	// PlayerOne loses a ball if we hit the ground
 	void PlayerOneLoseBall() {
