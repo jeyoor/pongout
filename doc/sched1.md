@@ -30,8 +30,8 @@ Sprint 3
 2015-12-12 pm
 
    * Implement score for second player
-   * Implement a basic linear computer opponent
    * Refactor start game UI two Player 1 col and Player 2 col
+   * Implement a basic linear computer opponent
    * Implement a physics-based opponent
    * Implement score sharing (include opponent type)
    * get better graphics, fonts, colors

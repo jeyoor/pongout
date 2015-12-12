@@ -140,6 +140,12 @@ public class BallControl : MonoBehaviour {
     //TODO: replace with level rebuild logic here???
 	//The game has been won because the last brick was destroyed
 	private void GameWon() {
+        gameObject.SetActive(false);
+		gameOverPanel.SetActive(true);
+	}
+
+	//The game has been lost because the last ball was lost
+	private void GameOver(string playerWon) {
 		for (int i = 0; i < playerOneLifeCount; i++) {
 			playerOneScore += 5;
 			UpdateScoreTexts();
@@ -148,12 +154,6 @@ public class BallControl : MonoBehaviour {
 			playerTwoScore += 5;
 			UpdateScoreTexts();
 		}
-        gameObject.SetActive(false);
-		gameOverPanel.SetActive(true);
-	}
-
-	//The game has been lost because the last ball was lost
-	private void GameOver(string playerWon) {
 		gameOverPanel.SetActive(true);
 	}
 
