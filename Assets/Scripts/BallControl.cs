@@ -18,7 +18,7 @@ public class BallControl : MonoBehaviour {
 	private TextMesh gameMessage;
 
 	private GameObject resetButton;
-	Vector3 initialPos = new Vector3(0f, 0f, 0f);
+	Vector3 initialPos;
 
 	int playerOneLifeCount;
     int playerTwoLifeCount;
@@ -30,9 +30,9 @@ public class BallControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		UpdateScoreTexts();
-		// save the initial position
+        // save the initial position
 		initialPos = transform.position;
+		UpdateScoreTexts();
 		// set the speed
 		ResetBallPosition();
 		// find out how many spare balls we have
@@ -43,11 +43,12 @@ public class BallControl : MonoBehaviour {
 	// Resets the ball with the initial position and speed.
 	void ResetBallPosition() {
 		transform.position = initialPos; //recover the initial position
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 		int randomNumber = Random.Range (0, 2);
 		if (randomNumber == 0) { // go left or right
-			GetComponent<Rigidbody2D>().AddForce (new Vector2 (Random.Range (30f, 50f), 10));
+			GetComponent<Rigidbody2D>().AddForce (new Vector2 (Random.Range (30f, 50f), -5));
 		} else {
-			GetComponent<Rigidbody2D>().AddForce (new Vector2 (Random.Range (-50f, -30f), 10));
+			GetComponent<Rigidbody2D>().AddForce (new Vector2 (Random.Range (-50f, -30f), -5));
 		}
 	}
 

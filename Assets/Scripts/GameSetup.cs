@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameSetup : MonoBehaviour {
 
-	private const float yOffset = 3F;
+	private const float yOffset = 0F;
 
 	public Camera mainCam;
 
@@ -21,7 +21,8 @@ public class GameSetup : MonoBehaviour {
 	public GameObject redBrickRef;
 	public GameObject[,] brickArray;
 
-	public int redRows = 1;
+	public int redRowsStart = 1;
+    public int redRowsEnd = 1;
 	public int blueRows = 2;
 	public int columns = 8;
 
@@ -44,12 +45,12 @@ public class GameSetup : MonoBehaviour {
 		}
 
 		//initialize the bricks
-		brickArray = new GameObject[columns, redRows + blueRows];
+		brickArray = new GameObject[columns, redRowsStart + blueRows + redRowsEnd];
 		for (int i = 0; i < columns; i++) {
-			for (int j = 0; j < blueRows + redRows; j++) {
-				brickArray [i, j] = Instantiate (j < blueRows ? blueBrickRef : redBrickRef) as GameObject;
-				brickArray [i, j].transform.position = new Vector3 (i - columns / 2, (j - blueRows + redRows / 2) + yOffset, 0f);
-				brickArray [i, j].GetComponent<Brick>().SetId(i, j, j < blueRows ? Brick.BrickType.BLUE : Brick.BrickType.RED);
+			for (int j = 0; j < redRowsStart + blueRows + redRowsEnd; j++) {
+				brickArray [i, j] = Instantiate ((j < blueRows || j > blueRows) ? blueBrickRef : redBrickRef) as GameObject;
+				brickArray [i, j].transform.position = new Vector3 (i - columns / 2, (j - redRowsStart + blueRows + redRowsEnd / 2) + yOffset, 0f);
+				brickArray [i, j].GetComponent<Brick>().SetId(i, j, (j < blueRows || j > blueRows) ? Brick.BrickType.BLUE : Brick.BrickType.RED);
 			}
 		}
 
@@ -75,7 +76,8 @@ public class GameSetup : MonoBehaviour {
 		
 			rightWall.transform.localScale = new Vector3 (0.5f, Screen.height / spriteScale, 1f);
 			rightWall.transform.position = new Vector3 (mainCam.ScreenToWorldPoint (new Vector3 (Screen.width, 0f, 0f)).x, 0f, 0f);
-		} else { 
+		}
+        else { 
 			// no sprite, size and place the colliders themselves
 			topWallCol.size = new Vector2 (mainCam.ScreenToWorldPoint(new Vector3(Screen.width *2f, 0f, 0f)).x, 1f);
 			topWallCol.offset = new Vector2 (0f, mainCam.ScreenToWorldPoint(new Vector3(0f, Screen.height, 0f)).y+0.5f);
@@ -94,7 +96,8 @@ public class GameSetup : MonoBehaviour {
 			players [0].position = new Vector3 (players [0].position.x, 
 			                                   mainCam.ScreenToWorldPoint (new Vector3 (0f, 20f, 0f)).y, 
 			                                   0f);
-		} else if (players.Length > 1) {
+		}
+        else if (players.Length > 1) {
 			players [0].position = new Vector3 (players [0].position.x, 
 			                                   mainCam.ScreenToWorldPoint (new Vector3 (0f, 20f, 0f)).y, 
 			                                   0f);
@@ -107,11 +110,11 @@ public class GameSetup : MonoBehaviour {
 	public bool IsGameWon() {
 		bool result = true;
 		for (int i = 0; i < columns; i++) {
-			for (int j = 0; j < blueRows + redRows; j++) {
+			for (int j = 0; j < redRowsStart + blueRows + redRowsEnd; j++) {
 				Brick brickData = brickArray[i, j].GetComponent<Brick>();
 				if (!brickData.GetDestroyed()) {
 					result = false;
-					j = blueRows + redRows;
+					j = redRowsStart + blueRows + redRowsEnd;
 					i = columns;
 				}
 			}
