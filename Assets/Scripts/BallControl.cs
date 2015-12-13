@@ -4,7 +4,7 @@ using System.Collections;
 
 public class BallControl : MonoBehaviour {
 
-	public static GameSetup gameSetup;
+	
 	public float minSpeed = 5, maxSpeed = 25;
 
     public Text playerOneScoreText;
@@ -12,7 +12,9 @@ public class BallControl : MonoBehaviour {
     public Text playerTwoScoreText;
     public Text playerTwoEndGameScoreText;
     
+    
     public GameObject gameOverPanel;
+    public GameSetup gameSetup;
     
 	public GameObject[] playerOneLives;
     public GameObject[] playerTwoLives;
@@ -26,8 +28,8 @@ public class BallControl : MonoBehaviour {
 	int playerOneLifeCount;
     int playerTwoLifeCount;
     
-    int playerOneScore = 0;
-    int playerTwoScore = 0;
+    public int playerOneScore = 0;
+    public int playerTwoScore = 0;
     
     int lastPlayerTouched = -1;
     

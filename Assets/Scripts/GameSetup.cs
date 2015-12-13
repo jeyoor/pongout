@@ -16,6 +16,9 @@ public class GameSetup : MonoBehaviour {
     public GameObject gameStartPanel;
     public GameObject highScorePanel;
     public HighscoreController highScoreData;
+    public InputField playerOneName;
+    public InputField playerTwoName;
+    public Text uploadResult;
     public GameObject headsUpDisplayPanel;
 
     public Toggle playerOneManual;
@@ -28,7 +31,10 @@ public class GameSetup : MonoBehaviour {
     public Toggle playerTwoPhysicsForecast;
 
     public PlayerControl playerOne;
+    public string playerOneType;
+    public string playerTwoType;
     public PlayerControl playerTwo;
+    
     
     public BallControl gameBall;
 
@@ -52,7 +58,6 @@ public class GameSetup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        BallControl.gameSetup = this;
 		if (topWall.GetComponent<SpriteRenderer> ()) { // do we have a sprite?
 			// get its width and store it 
 			spriteSize = topWall.GetComponent<SpriteRenderer> ().sprite.bounds.size.x;
@@ -64,6 +69,7 @@ public class GameSetup : MonoBehaviour {
 			leftWallCol = leftWall.GetComponent<BoxCollider2D> ();
 			rightWallCol = rightWall.GetComponent<BoxCollider2D> ();
 		}
+        uploadResult.text = "";
 
         InstantiateBricks();
 	}
@@ -83,36 +89,44 @@ public class GameSetup : MonoBehaviour {
         if (playerOneManual != null && playerOneManual.isOn) {
             playerOne.playerType = PlayerType.Manual;
             playerOne.manualControlType = ManualControlType.ArrowKeys;
+            playerOneType = "Manual";
         }
         else if (playerOneLinearFollow != null && playerOneLinearFollow.isOn) {
             playerOne.playerType = PlayerType.Automated;
             playerOne.automatedControlType = AutomatedControlType.LinearFollow;
+            playerOneType = "LinearFollow";
         }
         else if (playerOneFastLinearFollow != null && playerOneFastLinearFollow.isOn) {
             playerOne.playerType = PlayerType.Automated;
             playerOne.automatedControlType = AutomatedControlType.FastLinearFollow;
+            playerOneType = "FastLinearFollow";
         }
         else if (playerOnePhysicsForecast != null && playerOnePhysicsForecast.isOn) {
             playerOne.playerType = PlayerType.Automated;
             playerOne.automatedControlType = AutomatedControlType.PhysicsForecast;
+            playerOneType = "PhysicsForecast";
         }
         playerOne.Initialize();
 
         if (playerTwoManual != null && playerTwoManual.isOn) {
             playerTwo.playerType = PlayerType.Manual;
-            playerTwo.manualControlType = ManualControlType.ArrowKeys;
+            playerTwo.manualControlType = ManualControlType.WASD;
+            playerTwoType = "Manual";
         }
         else if (playerTwoLinearFollow != null && playerTwoLinearFollow.isOn) {
             playerTwo.playerType = PlayerType.Automated;
             playerTwo.automatedControlType = AutomatedControlType.LinearFollow;
+            playerTwoType = "LinearFollow";
         }
         else if (playerTwoFastLinearFollow != null && playerTwoFastLinearFollow.isOn) {
             playerTwo.playerType = PlayerType.Automated;
             playerTwo.automatedControlType = AutomatedControlType.FastLinearFollow;
+            playerTwoType = "FastLinearFollow";
         }
         else if (playerTwoPhysicsForecast != null && playerTwoPhysicsForecast.isOn) {
             playerTwo.playerType = PlayerType.Automated;
             playerTwo.automatedControlType = AutomatedControlType.PhysicsForecast;
+            playerTwoType = "PhysicsForecast";
         }
         playerTwo.Initialize();
         
@@ -191,12 +205,21 @@ public class GameSetup : MonoBehaviour {
         Application.LoadLevel(Application.loadedLevel);
     }
 
+    //Called from show high scores button
     public void ShowHighScorePanel() {
         StartCoroutine(highScoreData.GetScores());
         highScorePanel.SetActive(true);
     }
 
+    //Called from close high scores button
     public void HideHighScorePanel() {
         highScorePanel.SetActive(false);
+    }
+    
+    //Called from upload scores button
+    public void UploadHighScores() {
+        StartCoroutine(highScoreData.PostScores(playerOneType, playerOneName.text, gameBall.playerOneScore));
+        StartCoroutine(highScoreData.PostScores(playerTwoType, playerTwoName.text, gameBall.playerTwoScore));
+        uploadResult.text = "Upload Complete!";
     }
 }
