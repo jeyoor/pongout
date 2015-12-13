@@ -14,7 +14,7 @@ public class HighscoreController : MonoBehaviour
     }
  
     // remember to use StartCoroutine when calling this function!
-    IEnumerator PostScores(string type, string name, int score)
+    public IEnumerator PostScores(string type, string name, int score)
     {
         //This connects to a server side php script that will add the name and score to a MySQL DB.
         // Supply it with a string representing the players name and the players score.
@@ -34,7 +34,7 @@ public class HighscoreController : MonoBehaviour
  
     // Get the scores from the MySQL DB to display in a UI Text.
     // remember to use StartCoroutine when calling this function!
-    IEnumerator GetScores()
+    public IEnumerator GetScores()
     {
         gameObject.GetComponent<Text>().text = "Loading Scores";
         WWW hs_get = new WWW(highscoreURL);
