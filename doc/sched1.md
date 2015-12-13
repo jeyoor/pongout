@@ -60,3 +60,6 @@ Future work
       * Implement a physics-based opponent (see if it can win even at lower speeds)
       * Implement a neuroevolution-based opponent
       * Bayesian?
+   * Minor fixups
+      * Use password json file along with unity text assets  http://docs.unity3d.com/ScriptReference/TextAsset.html
+      * Switch web code to sha1? http://stackoverflow.com/questions/28858226/sha1-hash-is-different-in-the-unity3d-editor-and-on-the-iphone6-device
