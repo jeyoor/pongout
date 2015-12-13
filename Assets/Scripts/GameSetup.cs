@@ -14,6 +14,8 @@ public class GameSetup : MonoBehaviour {
 	public GameObject rightWall;
 
     public GameObject gameStartPanel;
+    public GameObject highScorePanel;
+    public HighscoreController highScoreData;
     public GameObject headsUpDisplayPanel;
 
     public Toggle playerOneManual;
@@ -187,5 +189,14 @@ public class GameSetup : MonoBehaviour {
     //called from Play Again? button
     public void ReloadGame() {
         Application.LoadLevel(Application.loadedLevel);
+    }
+
+    public void ShowHighScorePanel() {
+        StartCoroutine(highScoreData.GetScores());
+        highScorePanel.SetActive(true);
+    }
+
+    public void HideHighScorePanel() {
+        highScorePanel.SetActive(false);
     }
 }
