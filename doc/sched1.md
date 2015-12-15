@@ -33,8 +33,6 @@ Sprint 3
    * Refactor start game UI two Player 1 col and Player 2 col
    * Implement a basic linear computer opponent
    * figure out "end of level" logic (rebuild new level & increase speed)
-   * Implement score sharing (include opponent type)
-   * Hi score submission graphing
    * Submit a first draft
 
 
@@ -44,10 +42,11 @@ Sprint 4
 
 2015-12-15 pm
 
-   * Wrap up functionality
-   * Sound effects
    * get better graphics, fonts, colors
-   * Write up user-guide documentation
+   * Sound effects
+   * Write up technical specification
+   * Implement score sharing (include opponent type)
+   * Hi score submission graphing
    * Submit second draft
 
 
