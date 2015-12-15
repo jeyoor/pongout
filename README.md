@@ -32,5 +32,9 @@ Credits
 
    * [Dr. Dana Vrajitoru](http://www.cs.iusb.edu/~danav) for Breakout Unity3D source code, images, and motivation
    * [Kevin Linderman at the Unity3D Wiki](http://wiki.unity3d.com/index.php?title=Server_Side_Highscores) for highscore upload sample code
-   * [OpenGameArt.org](http://opengameart.org) for additional images and sounds
+   * [Nicolás A. Ortega](http://deathsbreedgames.github.io/) for additional images
+   * [Ivan Voirol](http://opengameart.org/users/silver-iv) for additional images
+   * [Fork Media](http://freesound.org/people/martian/) for additional sounds
+   * [Manuel Schleis](http://freesound.org/people/ManuelSchleis/) for additional sounds
+   * [OpenGameArt.org](http://opengameart.org) for additional images
    * [FreeSound.org](http://freesound.org) for additional sounds
