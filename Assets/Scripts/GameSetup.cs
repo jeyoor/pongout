@@ -51,6 +51,8 @@ public class GameSetup : MonoBehaviour {
     public int redRowsEnd = 1;
 	public int blueRows = 3;
 	public int columns = 8;
+    
+    public AudioSource startMusic;
 
 	public Transform[] players;
 
@@ -58,6 +60,9 @@ public class GameSetup : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        
+        startMusic.Play();
+        
 		if (topWall.GetComponent<SpriteRenderer> ()) { // do we have a sprite?
 			// get its width and store it 
 			spriteSize = topWall.GetComponent<SpriteRenderer> ().sprite.bounds.size.x;

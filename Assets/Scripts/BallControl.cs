@@ -31,6 +31,8 @@ public class BallControl : MonoBehaviour {
     public int playerOneScore = 0;
     public int playerTwoScore = 0;
     
+    public AudioSource bounceSound;
+    
     int lastPlayerTouched = -1;
     
     //every time the ball hits a paddle, its velocity will be scaled up this much
@@ -176,6 +178,7 @@ public class BallControl : MonoBehaviour {
 
 	// collision detection function
 	void OnCollisionEnter2D(Collision2D colInfo) {
+        bounceSound.Play();
 		if (colInfo.collider.tag == "Player") {
             
             PlayerControl playerInfo = colInfo.collider.GetComponent<PlayerControl>();
